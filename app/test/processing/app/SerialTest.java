@@ -27,32 +27,43 @@
  * the GNU General Public License.
  */
 
-package processing.app;
+ package processing.app;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-public class SerialTest {
-  class NullSerial extends Serial {
-    public NullSerial() throws SerialException {
-      super("none", 0, 'n', 0, 0, false, false);
-    }
-
-    @Override
-    protected void message(char[] chars, int length) {
-      output += new String(chars, 0, length);
-    }
-
-    String output = "";
-  }
-
-  @Test
-  public void testSerialUTF8Decoder() throws Exception {
-    NullSerial s = new NullSerial();
-    // https://github.com/arduino/Arduino/issues/9808
-    String testdata = "012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789°0123456789";
-    s.processSerialEvent(testdata.getBytes());
-    assertEquals(s.output, testdata);
-  }
-}
+ import static org.junit.Assert.assertArrayEquals;
+ import static org.junit.Assert.assertEquals;
+ 
+ import org.junit.Test;
+ 
+ public class SerialTest {
+   class NullSerial extends Serial {
+     public NullSerial() throws SerialException {
+       super("none", 0, 'n', 0, 0, false, false);
+     }
+ 
+     @Override
+     protected void message(char[] chars, int length) {
+       output += new String(chars, 0, length);
+     }
+ 
+     String output = "";
+   }
+ 
+   @Test
+   public void testSerialUTF8DecoderWithInvalidChars() throws Exception {
+     NullSerial s = new NullSerial();
+     byte[] testdata = new byte[] { '>', (byte) 0xC3, (byte) 0x28, '<' };
+     byte[] expected = new byte[] { '>', (byte) 0xEF, (byte) 0xBF, (byte) 0xBD, (byte) 0x28, '<' };
+     s.processSerialEvent(testdata);
+     byte[] res = s.output.getBytes("UTF-8");
+     assertArrayEquals(expected, res);
+   }
+ 
+   @Test
+   public void testSerialUTF8Decoder() throws Exception {
+     NullSerial s = new NullSerial();
+     // https://github.com/arduino/Arduino/issues/9808
+     String testdata = "012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789°0123456789";
+     s.processSerialEvent(testdata.getBytes());
+     assertEquals(s.output, testdata);
+   }
+ }
