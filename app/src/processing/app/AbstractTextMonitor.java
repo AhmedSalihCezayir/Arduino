@@ -226,7 +226,8 @@ public abstract class AbstractTextMonitor extends AbstractMonitor {
     if (addTimeStampBox.isSelected()) {
       textArea.append(addTimestamps(msg));
     } else {
-      textArea.append(msg);
+      textArea.append(msg);   
+      System.out.println("Appended");  
     }
     if (autoscrollBox.isSelected()) {
       textArea.setCaretPosition(textArea.getDocument().getLength());
