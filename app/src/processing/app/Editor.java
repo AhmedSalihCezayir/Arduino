@@ -46,11 +46,9 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -82,6 +80,8 @@ import javax.swing.TransferHandler;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.Element;
 
 import org.fife.ui.rsyntaxtextarea.folding.FoldManager;
 
@@ -97,6 +97,7 @@ import cc.arduino.view.StubMenuListener;
 import cc.arduino.view.findreplace.FindReplace;
 import jssc.SerialPortException;
 import processing.app.debug.RunnerException;
+import processing.app.debug.TargetBoard;
 import processing.app.forms.PasswordAuthorizationDialog;
 import processing.app.helpers.DocumentTextChangeListener;
 import processing.app.helpers.Keys;
@@ -108,6 +109,34 @@ import processing.app.syntax.PdeKeywords;
 import processing.app.syntax.SketchTextArea;
 import processing.app.tools.MenuScroller;
 import processing.app.tools.Tool;
+
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.text.BadLocationException;
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.*;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.*;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.ArrayList;
+
+import static processing.app.I18n.tr;
+import static processing.app.Theme.scale;
 
 /**
  * Main editor panel for the Processing Development Environment.
@@ -747,6 +776,10 @@ public class Editor extends JFrame implements RunnerListener {
     item = new JMenuItem(tr("Get Board Info"));
     item.addActionListener(e -> handleBoardInfo());
     toolsMenu.add(item);
+
+    item = new JMenuItem(tr("Add build settings to .INO file"));
+    item.addActionListener(e -> handleAddBuildSettings());
+    toolsMenu.add(item);
     toolsMenu.addSeparator();
 
     base.rebuildProgrammerMenu();
@@ -1136,33 +1169,33 @@ public class Editor extends JFrame implements RunnerListener {
     menu.setMnemonic(KeyEvent.VK_H);
 
     JMenuItem item = new JMenuItem(tr("Getting Started"));
-    item.addActionListener(event -> Base.openURL("https://www.arduino.cc/en/Guide"));
+    item.addActionListener(event -> Base.showArduinoGettingStarted());
     menu.add(item);
 
     item = new JMenuItem(tr("Environment"));
-    item.addActionListener(event -> Base.openURL("https://www.arduino.cc/en/Guide/Environment"));
+    item.addActionListener(event -> Base.showEnvironment());
     menu.add(item);
 
     item = new JMenuItem(tr("Troubleshooting"));
-    item.addActionListener(event -> Base.openURL("https://support.arduino.cc/hc/en-us"));
+    item.addActionListener(event -> Base.showTroubleshooting());
     menu.add(item);
 
     item = new JMenuItem(tr("Reference"));
-    item.addActionListener(event -> Base.openURL("https://www.arduino.cc/reference/en/"));
+    item.addActionListener(event -> Base.showReference());
     menu.add(item);
 
     menu.addSeparator();
 
     item = newJMenuItemShift(tr("Find in Reference"), 'F');
-    item.addActionListener(event -> handleFindReference(getCurrentTab().getCurrentKeyword()));
+    item.addActionListener(event -> handleFindReference(event));
     menu.add(item);
 
     item = new JMenuItem(tr("Frequently Asked Questions"));
-    item.addActionListener(event -> Base.openURL("https://support.arduino.cc/hc/en-us"));
+    item.addActionListener(event -> Base.showFAQ());
     menu.add(item);
 
     item = new JMenuItem(tr("Visit Arduino.cc"));
-    item.addActionListener(event -> Base.openURL("https://www.arduino.cc/"));
+    item.addActionListener(event -> Base.openURL(tr("http://www.arduino.cc/")));
     menu.add(item);
 
     // macosx already has its own about menu
@@ -1452,10 +1485,8 @@ public class Editor extends JFrame implements RunnerListener {
     // This must be run in the GUI thread
     SwingUtilities.invokeLater(() -> {
       codePanel.removeAll();
-      EditorTab selectedTab = tabs.get(index);
-      codePanel.add(selectedTab, BorderLayout.CENTER);
-      selectedTab.applyPreferences();
-      selectedTab.requestFocusInWindow(); // get the caret blinking
+      codePanel.add(tabs.get(index), BorderLayout.CENTER);
+      tabs.get(index).requestFocusInWindow(); // get the caret blinking
       // For some reason, these are needed. Revalidate says it should be
       // automatically called when components are added or removed, but without
       // it, the component switched to is not displayed. repaint() is needed to
@@ -1557,25 +1588,20 @@ public class Editor extends JFrame implements RunnerListener {
     tabs.remove(index);
   }
 
-
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+  void handleFindReference(ActionEvent e) {
+    String text = getCurrentTab().getCurrentKeyword();
 
-  void handleFindReference(String text) {
     String referenceFile = base.getPdeKeywords().getReference(text);
-    String q;
     if (referenceFile == null) {
-      q = text;
-    } else if (referenceFile.startsWith("Serial_")) {
-      q = referenceFile.substring(7);
+      statusNotice(I18n.format(tr("No reference available for \"{0}\""), text));
     } else {
-      q = referenceFile;
-    }
-    try {
-      Base.openURL("https://www.arduino.cc/search?tab=&q="
-                   + URLEncoder.encode(q, "UTF-8"));
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
+      if (referenceFile.startsWith("Serial_")) {
+        Base.showReference("Serial/" + referenceFile.substring("Serial_".length()));
+      } else {
+        Base.showReference("Reference/" + referenceFile);
+      }
     }
   }
 
@@ -2375,6 +2401,21 @@ public class Editor extends JFrame implements RunnerListener {
 
   }
 
+  public void handleAddBuildSettings(){
+    final LinkedHashMap<String, String> settingsMap = base.getBoardsCustomMenus().stream().filter(JMenu::isVisible).map((e)->{
+      String setting = e.getText().substring(0, e.getText().indexOf(":"));
+      String value = e.getText().replace(setting + ":", "").replace("\"", "").trim();
+      return new String[]{setting, value};
+    }).collect(LinkedHashMap::new, (map, menu) -> map.put(menu[0], menu[1]), LinkedHashMap::putAll);
+	handleSave(true);
+    Optional<EditorTab> optionalEditorTab = tabs.stream().filter(tab -> tab.getSketch().getSketch().equals(sketch)).findFirst();
+    if(optionalEditorTab.isPresent()){
+      optionalEditorTab.get().setText(sketch.setBuildSettings(sketch, settingsMap));
+      handleSave(true);
+      System.out.println("Build settings header should be added");
+    }
+  }
+
   private void handleBurnBootloader() {
     console.clear();
     EditorConsole.setCurrentEditorConsole(this.console);
@@ -2593,7 +2634,12 @@ public class Editor extends JFrame implements RunnerListener {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   protected void onBoardOrPortChange() {
-    lineStatus.updateBoardAndPort();
+    TargetBoard board = BaseNoGui.getTargetBoard();
+    if (board != null)
+      lineStatus.setBoardName(board.getName());
+    else
+      lineStatus.setBoardName("-");
+    lineStatus.setPort(PreferencesData.get("serial.port"));
     lineStatus.repaint();
   }
 
