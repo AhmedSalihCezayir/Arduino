@@ -220,6 +220,12 @@ public class Base {
     parser.parseArgumentsPhase1();
     commandLine = !parser.isGuiMode();
 
+    // This configure the logs root folder
+    if (parser.isGuiMode()) {
+        System.out.println("Set log4j store directory " + BaseNoGui.getSettingsFolder().getAbsolutePath());
+    }
+    System.setProperty("log4j.dir", BaseNoGui.getSettingsFolder().getAbsolutePath());
+
     BaseNoGui.checkInstallationFolder();
 
     // If no path is set, get the default sketchbook folder for this platform
@@ -309,7 +315,8 @@ public class Base {
           BaseNoGui.getPlatform(), gpgDetachedSignatureVerifier);
       ProgressListener progressListener = new ConsoleProgressListener();
 
-      contributionInstaller.updateIndex(progressListener);
+      List<String> downloadedPackageIndexFiles = contributionInstaller.updateIndex(progressListener);
+      contributionInstaller.deleteUnknownFiles(downloadedPackageIndexFiles);
       indexer.parseIndex();
       indexer.syncWithFilesystem();
 
@@ -503,7 +510,10 @@ public class Base {
         contributionsSelfCheck = new ContributionsSelfCheck(this, new UpdatableBoardsLibsFakeURLsHandler(this), contributionInstaller, libraryInstaller);
         new Timer(false).schedule(contributionsSelfCheck, Constants.BOARDS_LIBS_UPDATABLE_CHECK_START_PERIOD);
       }
-
+      // Load the build settings
+      for(Editor editor: editors){
+        editor.findTab(editor.sketch.getPrimaryFile()).loadBuildSettings(this);
+      }
     } else if (parser.isNoOpMode()) {
       // Do nothing (intended for only changing preferences)
       System.exit(0);
@@ -708,9 +718,7 @@ public class Base {
     }
   }
 
-
   // .................................................................
-
 
   boolean breakTime = false;
   String[] months = {
@@ -1466,7 +1474,6 @@ public class Base {
           customMenu.putClientProperty("platform", getPlatformUniqueId(targetPlatform));
           customMenu.putClientProperty("removeOnWindowDeactivation", true);
           boardsCustomMenus.add(customMenu);
-          MenuScroller.setScrollerFor(customMenu);
         }
       }
     }
@@ -1696,20 +1703,18 @@ public class Base {
     ButtonGroup group = new ButtonGroup();
 
     TargetBoard board = BaseNoGui.getTargetBoard();
-    if (board != null) {
-      TargetPlatform boardPlatform = board.getContainerPlatform();
-      TargetPlatform corePlatform = null;
+    TargetPlatform boardPlatform = board.getContainerPlatform();
+    TargetPlatform corePlatform = null;
 
-      String core = board.getPreferences().get("build.core");
-      if (core != null && core.contains(":")) {
-        String[] split = core.split(":", 2);
-        corePlatform = BaseNoGui.getCurrentTargetPlatformFromPackage(split[0]);
-      }
-
-      addProgrammersForPlatform(boardPlatform, programmerMenus, group);
-      if (corePlatform != null)
-        addProgrammersForPlatform(corePlatform, programmerMenus, group);
+    String core = board.getPreferences().get("build.core");
+    if (core != null && core.contains(":")) {
+      String[] split = core.split(":", 2);
+      corePlatform = BaseNoGui.getCurrentTargetPlatformFromPackage(split[0]);
     }
+
+    addProgrammersForPlatform(boardPlatform, programmerMenus, group);
+    if (corePlatform != null)
+      addProgrammersForPlatform(corePlatform, programmerMenus, group);
 
     if (programmerMenus.isEmpty()) {
       JMenuItem item = new JMenuItem(tr("No programmers available for this board"));
@@ -2157,6 +2162,60 @@ public class Base {
     stroke = KeyStroke.getKeyStroke('W', modifiers);
     root.registerKeyboardAction(disposer, stroke,
             JComponent.WHEN_IN_FOCUSED_WINDOW);
+  }
+
+
+  // .................................................................
+
+
+  static public void showReference(String filename) {
+    showReference("reference/www.arduino.cc/en", filename);
+  }
+
+  static public void showReference(String prefix, String filename) {
+    File referenceFolder = getContentFile(prefix);
+    File referenceFile = new File(referenceFolder, filename);
+    if (!referenceFile.exists())
+      referenceFile = new File(referenceFolder, filename + ".html");
+
+    if(referenceFile.exists()){
+      openURL(referenceFile.getAbsolutePath());
+    }else{
+      showWarning(tr("Problem Opening URL"), format(tr("Could not open the URL\n{0}"), referenceFile), null);
+    }
+  }
+
+  public static void showEdisonGettingStarted() {
+    showReference("reference/Edison_help_files", "ArduinoIDE_guide_edison");
+  }
+
+  static public void showArduinoGettingStarted() {
+    if (OSUtils.isMacOS()) {
+      showReference("Guide/MacOSX");
+    } else if (OSUtils.isWindows()) {
+      showReference("Guide/Windows");
+    } else {
+      openURL("http://www.arduino.cc/playground/Learning/Linux");
+    }
+  }
+
+  static public void showReference() {
+    showReference("Reference/HomePage");
+  }
+
+
+  static public void showEnvironment() {
+    showReference("Guide/Environment");
+  }
+
+
+  static public void showTroubleshooting() {
+    showReference("Guide/Troubleshooting");
+  }
+
+
+  static public void showFAQ() {
+    showReference("Main/FAQ");
   }
 
 
