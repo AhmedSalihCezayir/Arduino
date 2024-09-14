@@ -49,6 +49,7 @@ public class CustomProxySelector {
   }
 
   public Proxy getProxyFor(URI uri) throws IOException, ScriptException, NoSuchMethodException {
+    System.out.println("TEST");
     String proxyType = preferences.get(Constants.PREF_PROXY_TYPE);
     if (proxyType == null || proxyType.isEmpty()) {
       proxyType = Constants.PROXY_TYPE_AUTO;
