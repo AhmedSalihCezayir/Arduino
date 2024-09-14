@@ -98,6 +98,7 @@ public class Sizer implements MessageConsumer {
   
   @Override
   public void message(String s) {
+    System.out.println("TEST");
     if (firstLine == null)
       firstLine = s;
     Matcher textMatcher = textPattern.matcher(s.trim());
