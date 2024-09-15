@@ -50,6 +50,7 @@ public class CustomProxySelector {
 
   public Proxy getProxyFor(URI uri) throws IOException, ScriptException, NoSuchMethodException {
     String proxyType = preferences.get(Constants.PREF_PROXY_TYPE);
+    System.out.println("TEST");
     if (proxyType == null || proxyType.isEmpty()) {
       proxyType = Constants.PROXY_TYPE_AUTO;
     }
@@ -75,6 +76,7 @@ public class CustomProxySelector {
   }
 
   private Proxy pacProxy(String pac, URI uri) throws IOException, ScriptException, NoSuchMethodException {
+    System.out.println("TEST");
     setAuthenticator(preferences.get(Constants.PREF_PROXY_USERNAME), preferences.get(Constants.PREF_PROXY_PASSWORD));
 
     URLConnection urlConnection = new URL(pac).openConnection();
@@ -110,12 +112,14 @@ public class CustomProxySelector {
   }
 
   private String callFindProxyForURL(URI uri, ScriptEngine nashorn) throws ScriptException, NoSuchMethodException {
+    System.out.println("TEST");
     Invocable script = (Invocable) nashorn;
     URL url = toUrl(uri);
     return (String) script.invokeFunction("FindProxyForURL", url.toExternalForm(), url.getHost());
   }
 
   private Proxy makeProxyFrom(String proxyConfigs) {
+    System.out.println("TEST");
     String proxyConfig = proxyConfigs.split(";")[0];
     if (proxyConfig.startsWith("DIRECT")) {
       return Proxy.NO_PROXY;
@@ -133,6 +137,7 @@ public class CustomProxySelector {
   }
 
   private URL toUrl(URI uri) {
+    System.out.println("TEST");
     try {
       return uri.toURL();
     } catch (MalformedURLException e) {

@@ -63,22 +63,27 @@ public class VersionComparator implements Comparator<String> {
   }
 
   public static boolean greaterThanOrEqual(String a, String b) {
+    System.out.println("TEST");
     return compareTo(a, b) >= 0;
   }
 
   public static String max(String a, String b) {
+    System.out.println("TEST");
     return greaterThan(a, b) ? a : b;
   }
 
   public static ContributedLibrary max(ContributedLibrary a, ContributedLibrary b) {
+    System.out.println("TEST");
     return greaterThan(a, b) ? a : b;
   }
 
   public static boolean greaterThan(ContributedLibrary a, ContributedLibrary b) {
+    System.out.println("TEST");
     return greaterThan(a.getParsedVersion(), b.getParsedVersion());
   }
 
   public static int compareTo(ContributedLibrary a, ContributedLibrary b) {
+    System.out.println("TEST");
     return compareTo(a.getParsedVersion(), b.getParsedVersion());
   }
 }

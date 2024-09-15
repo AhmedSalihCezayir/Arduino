@@ -52,10 +52,12 @@ public class ContributedLibraryReleases {
   }
 
   public List<ContributedLibrary> getReleases() {
+    System.out.println("TEST");
     return releases;
   }
 
   public boolean shouldContain(ContributedLibrary lib) {
+    System.out.println("TEST");
     if (latest == null) {
       return true;
     }
@@ -63,6 +65,7 @@ public class ContributedLibraryReleases {
   }
 
   public void add(ContributedLibrary library) {
+    System.out.println("TEST");
     if (latest == null) {
       latest = library;
     }
@@ -78,6 +81,7 @@ public class ContributedLibraryReleases {
   }
 
   public Optional<ContributedLibrary> getInstalled() {
+    System.out.println("TEST");
     return releases.stream() //
         .filter(ContributedLibrary::isLibraryInstalled) //
         .reduce((x, y) -> {
@@ -91,6 +95,7 @@ public class ContributedLibraryReleases {
   }
 
   public ContributedLibrary getLatest() {
+    System.out.println("TEST");
     return latest;
   }
 
