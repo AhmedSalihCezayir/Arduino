@@ -150,6 +150,7 @@ public class SketchFile {
   }
 
   private boolean deleteCompiledFilesFrom(Path tempBuildFolder) throws IOException {
+    System.out.println("TEST");
     List<Path> compiledFiles = Files.list(tempBuildFolder)
       .filter(pathname -> pathname.getFileName().toString().startsWith(getFileName()))
       .collect(Collectors.toList());
@@ -206,6 +207,7 @@ public class SketchFile {
    * others.
    */
   public String getPrettyName() {
+    System.out.println("TEST");
     if (!PreferencesData.getBoolean("editor.show_always_extensions") && isExtension(Sketch.SKETCH_EXTENSIONS))
       return getBaseName();
     else
@@ -216,6 +218,7 @@ public class SketchFile {
    * Returns the filename without extension
    */
   public String getBaseName() {
+    System.out.println("TEST");
     return FileUtils.splitFilename(file).basename;
   }
 
@@ -237,6 +240,7 @@ public class SketchFile {
 
 
   public boolean isModified() {
+    System.out.println("TEST");
     if (storage != null)
       return storage.isModified();
     return false;
@@ -253,6 +257,7 @@ public class SketchFile {
    * just directly reads the file.
    */
   public String load() throws IOException {
+    System.out.println("TEST");
     String text = BaseNoGui.loadFile(file);
 
     if (text == null) {

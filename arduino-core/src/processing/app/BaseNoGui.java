@@ -110,6 +110,7 @@ public class BaseNoGui {
   // directory when starting the IDE (which is not the same as the
   // current working directory!).
   static public File absoluteFile(String path) {
+    System.out.println("TEST");
     if (path == null) return null;
 
     File file = new File(path);
@@ -124,6 +125,7 @@ public class BaseNoGui {
    * characters inside a String (and adding 1).
    */
   static public int countLines(String what) {
+    System.out.println("TEST");
     int count = 1;
     for (char c : what.toCharArray()) {
       if (c == '\n') count++;
@@ -132,6 +134,7 @@ public class BaseNoGui {
   }
 
   static public PreferencesMap getBoardPreferences() {
+    System.out.println("TEST");
     TargetBoard board = getTargetBoard();
     if (board == null)
       return null;
@@ -196,6 +199,7 @@ public class BaseNoGui {
   }
 
   static public File getContentFile(String name) {
+    System.out.println("TEST");
     String appDir = System.getProperty("APP_DIR");
     if (appDir == null || appDir.length() == 0) {
       appDir = currentDirectory;
@@ -232,6 +236,7 @@ public class BaseNoGui {
   }
 
   static public String getExamplesPath() {
+    System.out.println("TEST");
     return examplesFolder.getAbsolutePath();
   }
 

@@ -88,16 +88,19 @@ public class LibraryList extends LinkedList<UserLibrary> {
     return new Collector<UserLibrary, LibraryList, LibraryList>() {
       @Override
       public Supplier<LibraryList> supplier() {
+        System.out.println("TEST");
         return () -> new LibraryList();
       }
 
       @Override
       public BiConsumer<LibraryList, UserLibrary> accumulator() {
+        System.out.println("TEST");
         return (libs, lib) -> libs.add(lib);
       }
 
       @Override
       public BinaryOperator<LibraryList> combiner() {
+        System.out.println("TEST");
         return (we, they) -> {
           we.addAll(they);
           return we;
@@ -106,11 +109,13 @@ public class LibraryList extends LinkedList<UserLibrary> {
 
       @Override
       public Function<LibraryList, LibraryList> finisher() {
+        System.out.println("TEST");
         return (libs) -> libs;
       }
 
       @Override
       public Set<Collector.Characteristics> characteristics() {
+        System.out.println("TEST");
         return EnumSet.noneOf(Characteristics.class);
       }
     };

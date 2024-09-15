@@ -34,6 +34,7 @@ public class Sketch {
   public static final Comparator<SketchFile> CODE_DOCS_COMPARATOR = new Comparator<SketchFile>() {
     @Override
     public int compare(SketchFile x, SketchFile y) {
+      System.out.println("TEST");
       if (x.isPrimary() && !y.isPrimary())
         return -1;
       if (y.isPrimary() && !x.isPrimary())
@@ -55,6 +56,7 @@ public class Sketch {
   }
 
   static public File checkSketchFile(File file) {
+    System.out.println("TEST");
     // check to make sure that this .pde file is
     // in a folder of the same name
     String fileName = file.getName();
@@ -86,6 +88,7 @@ public class Sketch {
    *         not.
    */
   public boolean reload() throws IOException {
+    System.out.println("TEST");
     List<SketchFile> reloaded = listSketchFiles(false);
     if (!reloaded.equals(files)) {
       files = reloaded;
@@ -104,6 +107,7 @@ public class Sketch {
    *          When true, any invalid filenames will show a warning.
    */
   private List<SketchFile> listSketchFiles(boolean showWarnings) throws IOException {
+    System.out.println("TEST");
     Set<SketchFile> result = new TreeSet<>(CODE_DOCS_COMPARATOR);
     for (File file : FileUtils.listFiles(folder, false, EXTENSIONS)) {
       if (BaseNoGui.isSanitaryName(FileUtils.splitFilename(file).basename)) {
@@ -125,6 +129,7 @@ public class Sketch {
    * about to be used.
    */
   public File prepareDataFolder() {
+    System.out.println("TEST");
     File dataFolder = getDataFolder();
     if (!dataFolder.exists()) {
       dataFolder.mkdirs();
