@@ -36,26 +36,31 @@ public class LegacyTargetPackage implements TargetPackage {
 
   @Override
   public Map<String, TargetPlatform> getPlatforms() {
+    System.out.println("TEST");
     return platforms;
   }
 
   @Override
   public Collection<TargetPlatform> platforms() {
+    System.out.println("TEST");
     return platforms.values();
   }
 
   @Override
   public TargetPlatform get(String platform) {
+    System.out.println("TEST");
     return platforms.get(platform);
   }
 
   @Override
   public boolean hasPlatform(TargetPlatform platform) {
+    System.out.println("TEST");
     return platforms.containsKey(platform.getId());
   }
 
   @Override
   public String getId() {
+    System.out.println("TEST");
     return id;
   }
 }

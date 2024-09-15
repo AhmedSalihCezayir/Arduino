@@ -82,26 +82,31 @@ public class LegacyTargetBoard implements TargetBoard {
 
   @Override
   public String getMenuLabel(String menuId, String selectionId) {
+    System.out.println("TEST");
     return getMenuLabels(menuId).get(selectionId);
   }
 
   @Override
   public Set<String> getMenuIds() {
+    System.out.println("TEST");
     return menuOptions.keySet();
   }
 
   @Override
   public PreferencesMap getMenuPreferences(String menuId, String selectionId) {
+    System.out.println("TEST");
     return menuOptions.get(menuId).subTree(selectionId);
   }
 
   @Override
   public TargetPlatform getContainerPlatform() {
+    System.out.println("TEST");
     return containerPlatform;
   }
 
   @Override
   public String getFQBN() {
+    System.out.println("TEST");
     return getContainerPlatform().getContainerPackage().getId() + ":" + getContainerPlatform().getId() + ":" + getId();
   }
 }

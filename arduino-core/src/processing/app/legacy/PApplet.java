@@ -62,6 +62,7 @@ public class PApplet {
    * </PRE>
    */
   static public String[] splitTokens(String what) {
+    System.out.println("TEST");
     return splitTokens(what, PConstants.WHITESPACE);
   }
 
@@ -83,6 +84,7 @@ public class PApplet {
    * </PRE>
    */
   static public String[] splitTokens(String what, String delim) {
+    System.out.println("TEST");
     StringTokenizer toker = new StringTokenizer(what, delim);
     String pieces[] = new String[toker.countTokens()];
 
@@ -103,6 +105,7 @@ public class PApplet {
    * column alignments (of say an excel file) where there are empty columns.
    */
   static public String[] split(String what, char delim) {
+    System.out.println("TEST");
     // do this so that the exception occurs inside the user's
     // program, rather than appearing to be a bug inside split()
     if (what == null)
@@ -443,6 +446,7 @@ public class PApplet {
    * the specified String, rather than just the first.
    */
   static public String[][] matchAll(String what, String regexp) {
+    System.out.println("TEST");
     Pattern p = Pattern.compile(regexp, Pattern.MULTILINE | Pattern.DOTALL);
     Matcher m = p.matcher(what);
     ArrayList<String[]> results = new ArrayList<>();
@@ -475,6 +479,7 @@ public class PApplet {
    * pick up newline characters.
    */
   static public String[] match(String what, String regexp) {
+    System.out.println("TEST");
     Pattern p = Pattern.compile(regexp, Pattern.MULTILINE | Pattern.DOTALL);
     return match(what, p);
   }

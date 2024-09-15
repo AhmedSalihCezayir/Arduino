@@ -66,7 +66,7 @@ public class CIDRUtils {
 
 
     private void calculate() throws UnknownHostException {
-
+        System.out.println("TEST");
         ByteBuffer maskBuffer;
         int targetSize;
         if (inetAddress.getAddress().length == 4) {
@@ -99,6 +99,7 @@ public class CIDRUtils {
     }
 
     private byte[] toBytes(byte[] array, int targetSize) {
+        System.out.println("TEST");
         int counter = 0;
         List<Byte> newArr = new ArrayList<>();
         while (counter < targetSize && (array.length - 1 - counter >= 0)) {
@@ -120,15 +121,17 @@ public class CIDRUtils {
     }
 
     public String getNetworkAddress() {
-
+        System.out.println("TEST");
         return this.startAddress.getHostAddress();
     }
 
     public String getBroadcastAddress() {
+        System.out.println("TEST");
         return this.endAddress.getHostAddress();
     }
 
     public boolean isInRange(String ipAddress) throws UnknownHostException {
+        System.out.println("TEST");
         InetAddress address = InetAddress.getByName(ipAddress);
         BigInteger start = new BigInteger(1, this.startAddress.getAddress());
         BigInteger end = new BigInteger(1, this.endAddress.getAddress());

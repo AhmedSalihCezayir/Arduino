@@ -155,6 +155,7 @@ public class LegacyTargetPlatform implements TargetPlatform {
   }
 
   private void rewriteKeysOfOldPlatformsTxtAndWarnAboutIt() throws IOException {
+    System.out.println("TEST");
     File platformRewrite = new File(BaseNoGui.getHardwareFolder(), "platform.keys.rewrite.txt");
     PreferencesMap platformRewriteProps = new PreferencesMap(platformRewrite);
 
@@ -212,6 +213,7 @@ public class LegacyTargetPlatform implements TargetPlatform {
 
   @Override
   public PreferencesMap getProgrammer(String programmer) {
+    System.out.println("TEST");
     return getProgrammers().get(programmer);
   }
 
@@ -222,11 +224,13 @@ public class LegacyTargetPlatform implements TargetPlatform {
 
   @Override
   public PreferencesMap getPreferences() {
+    System.out.println("TEST");
     return preferences;
   }
 
   @Override
   public TargetBoard getBoard(String boardId) {
+    System.out.println("TEST");
     if (boards.containsKey(boardId)) {
       return boards.get(boardId);
     }
@@ -248,6 +252,7 @@ public class LegacyTargetPlatform implements TargetPlatform {
 
   @Override
   public boolean isInSketchbook() {
+    System.out.println("TEST");
 	return getFolder().getAbsolutePath().startsWith(BaseNoGui.getSketchbookHardwareFolder().getAbsolutePath());
   }
 }
