@@ -81,6 +81,7 @@ public class ContributionsIndexer {
   }
 
   public void parseIndex() throws Exception {
+    System.out.println("TEST");
     // Read bundled index...
     File bundledIndexFile = new File(builtInHardwareFolder, Constants.BUNDLED_INDEX_FILE_NAME);
     mergeContributions(bundledIndexFile);
@@ -145,6 +146,7 @@ public class ContributionsIndexer {
   }
 
   private List<File> get3rdPartyIndexFiles() {
+    System.out.println("TEST");
     List<File> indexFiles = new ArrayList<>();
     for (String urlString : PreferencesData.getCollection(Constants.PREF_BOARDS_MANAGER_ADDITIONAL_URLS)) {
       URL url;
@@ -173,6 +175,7 @@ public class ContributionsIndexer {
   }
 
   private void mergeContributions(File indexFile) throws IOException {
+    System.out.println("TEST");
     if (!indexFile.exists())
       return;
 
@@ -243,6 +246,7 @@ public class ContributionsIndexer {
   }
 
   public void syncWithFilesystem() throws IOException {
+    System.out.println("TEST");
     syncBuiltInHardware();
 
     syncLocalPackages();
@@ -337,6 +341,7 @@ public class ContributionsIndexer {
   }
 
   private ContributedTool syncToolWithFilesystem(ContributedPackage pack, File installationFolder, String toolName, String version) {
+    System.out.println("TEST");
     ContributedTool tool = pack.findTool(toolName, version);
     if (tool == null) {
       tool = pack.findResolvedTool(toolName, version);
