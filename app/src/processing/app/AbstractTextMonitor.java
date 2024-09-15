@@ -55,12 +55,14 @@ public abstract class AbstractTextMonitor extends AbstractMonitor {
 
   @Override
   public synchronized void addMouseWheelListener(MouseWheelListener l) {
+    System.out.println("TEST");
     super.addMouseWheelListener(l);
     textArea.addMouseWheelListener(l);
   }
 
   @Override
   public synchronized void addKeyListener(KeyListener l) {
+    System.out.println("TEST");
     super.addKeyListener(l);
     textArea.addKeyListener(l);
     textField.addKeyListener(l);
@@ -68,7 +70,7 @@ public abstract class AbstractTextMonitor extends AbstractMonitor {
 
   @Override
   protected void onCreateWindow(Container mainPane) {
-
+    System.out.println("TEST");
     mainPane.setLayout(new BorderLayout());
 
     textArea = new TextAreaFIFO(8_000_000);
@@ -172,6 +174,7 @@ public abstract class AbstractTextMonitor extends AbstractMonitor {
 
   @Override
   protected void onEnableWindow(boolean enable) {
+    System.out.println("TEST");
     // never actually disable textArea, so people can
     // still select & copy text, even when the port
     // is closed or disconnected
@@ -217,6 +220,7 @@ public abstract class AbstractTextMonitor extends AbstractMonitor {
   private boolean isStartingLine = true;
 
   protected void updateTextArea(String msg) {
+    System.out.println("TEST");
     if (addTimeStampBox.isSelected()) {
       textArea.append(addTimestamps(msg));
     } else {

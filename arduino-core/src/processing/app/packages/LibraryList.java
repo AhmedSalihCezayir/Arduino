@@ -58,6 +58,7 @@ public class LibraryList extends LinkedList<UserLibrary> {
   }
 
   public synchronized UserLibrary getByName(String name) {
+    System.out.println("TEST");
     for (UserLibrary l : this)
       if (l.getName().equals(name))
         return l;
@@ -65,10 +66,12 @@ public class LibraryList extends LinkedList<UserLibrary> {
   }
 
   public synchronized void sort() {
+    System.out.println("TEST");
     Collections.sort(this, (x, y) -> x.getName().compareToIgnoreCase(y.getName()));
   }
 
   public synchronized LibraryList filterLibrariesInSubfolder(File subFolder) {
+    System.out.println("TEST");
     LibraryList res = new LibraryList();
     for (UserLibrary lib : this) {
       if (FileUtils.isSubDirectory(subFolder, lib.getInstalledFolder())) {
@@ -79,12 +82,14 @@ public class LibraryList extends LinkedList<UserLibrary> {
   }
 
   public synchronized boolean hasLibrary(UserLibrary lib) {
+    System.out.println("TEST");
     for (UserLibrary l : this)
       if (l == lib) return true;
     return false;
   }
 
   public static Collector<UserLibrary, LibraryList, LibraryList> collector() {
+    System.out.println("TEST");
     return new Collector<UserLibrary, LibraryList, LibraryList>() {
       @Override
       public Supplier<LibraryList> supplier() {

@@ -258,6 +258,7 @@ public class SerialPlotter extends AbstractMonitor {
   }
 
   protected void onCreateWindow(Container mainPane) {
+    System.out.println("TEST");
     mainPane.setLayout(new BorderLayout());
 
     GraphPanel graphPanel = new GraphPanel();
@@ -345,6 +346,7 @@ public class SerialPlotter extends AbstractMonitor {
   }
 
   private void send(String string) {
+    System.out.println("TEST");
     String s = string;
     if (serial != null) {
       switch (lineEndings.getSelectedIndex()) {
@@ -369,11 +371,13 @@ public class SerialPlotter extends AbstractMonitor {
   }
 
   public void onSendCommand(ActionListener listener) {
+    System.out.println("TEST");
     textField.addActionListener(listener);
     sendButton.addActionListener(listener);
   }
 
   public void applyPreferences() {
+    System.out.println("TEST");
     // Apply line endings.
     if (PreferencesData.get("serial.line_ending") != null) {
       lineEndings.setSelectedIndex(PreferencesData.getInteger("serial.line_ending"));
@@ -386,6 +390,7 @@ public class SerialPlotter extends AbstractMonitor {
   }
 
   private void onSerialRateChange(ActionListener listener) {
+    System.out.println("TEST");
     serialRates.addActionListener(listener);
   }
 

@@ -150,6 +150,7 @@ public class SketchFile {
   }
 
   private boolean deleteCompiledFilesFrom(Path tempBuildFolder) throws IOException {
+    System.out.println("TEST");
     List<Path> compiledFiles = Files.list(tempBuildFolder)
       .filter(pathname -> pathname.getFileName().toString().startsWith(getFileName()))
       .collect(Collectors.toList());
@@ -175,6 +176,7 @@ public class SketchFile {
    *           message should be already translated.
    */
   public void renameTo(String newName) throws IOException {
+    System.out.println("TEST");
     File newFile = new File(file.getParentFile(), newName);
     sketch.checkNewFilename(newFile);
     if (!file.exists() || file.renameTo(newFile)) {
@@ -190,6 +192,7 @@ public class SketchFile {
    * be used (e.g. when renaming the entire sketch directory).
    */
   protected void renamedTo(File what) {
+    System.out.println("TEST");
     file = what;
   }
 
@@ -206,6 +209,7 @@ public class SketchFile {
    * others.
    */
   public String getPrettyName() {
+    System.out.println("TEST");
     if (!PreferencesData.getBoolean("editor.show_always_extensions") && isExtension(Sketch.SKETCH_EXTENSIONS))
       return getBaseName();
     else
@@ -220,6 +224,7 @@ public class SketchFile {
   }
 
   public boolean isExtension(String... extensions) {
+    System.out.println("TEST");
     return isExtension(Arrays.asList(extensions));
   }
 
