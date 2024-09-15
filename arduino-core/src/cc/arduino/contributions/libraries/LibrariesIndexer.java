@@ -87,6 +87,7 @@ public class LibrariesIndexer {
   }
 
   private void parseIndex(File file) throws IOException {
+    System.out.println("TEST");
     InputStream indexIn = null;
     try {
       indexIn = new FileInputStream(file);
@@ -123,6 +124,7 @@ public class LibrariesIndexer {
   }
 
   public List<UserLibraryFolder> getLibrariesFolders() {
+    System.out.println("TEST");
     return librariesFolders;
   }
 
@@ -147,6 +149,7 @@ public class LibrariesIndexer {
   }
 
   public void rescanLibraries() {
+    System.out.println("TEST");
     // Clear all installed flags
     installedLibraries.clear();
 
@@ -176,6 +179,7 @@ public class LibrariesIndexer {
   }
 
   private void scanInstalledLibraries(UserLibraryFolder folderDesc) {
+    System.out.println("TEST");
     File list[] = folderDesc.folder.listFiles(OnlyDirs.ONLY_DIRS);
     // if a bad folder or something like that, this might come back null
     if (list == null)
@@ -208,6 +212,7 @@ public class LibrariesIndexer {
   }
 
   private void scanLibrary(UserLibraryFolder folderDesc) throws IOException {
+    System.out.println("TEST");
     // A library is considered "legacy" if it doesn't contains
     // a file called "library.properties"
     File check = new File(folderDesc.folder, "library.properties");
