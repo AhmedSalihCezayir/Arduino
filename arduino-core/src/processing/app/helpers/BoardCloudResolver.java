@@ -48,6 +48,7 @@ import static processing.app.I18n.tr;
 public class BoardCloudResolver {
 
   public synchronized void getBoardBy(String vid, String pid) {
+    System.out.println("TEST");
     // this method is less useful in Windows < WIN10 since you need drivers to be already installed
     ObjectMapper mapper = new ObjectMapper();
     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -75,6 +76,7 @@ public class BoardCloudResolver {
   }
 
   public String resolveDeviceByBoardID(Map<String, TargetPackage> packages, String boardId) {
+    System.out.println("TEST");
     assert packages != null;
     assert boardId != null;
     for (TargetPackage targetPackage : packages.values()) {
@@ -117,14 +119,17 @@ public class BoardCloudResolver {
     }
 
     public void setArchitecture(String tmp) {
+      System.out.println("TEST");
       architecture = tmp;
     }
 
     public String getId() {
+      System.out.println("TEST");
       return id;
     }
 
     public void setId(String tmp) {
+      System.out.println("TEST");
       id = tmp;
     }
 

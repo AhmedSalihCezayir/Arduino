@@ -68,6 +68,7 @@ public class PreferencesMap extends LinkedHashMap<String, String> {
    * @throws IOException
    */
   public void load(File file) throws IOException {
+    System.out.println("TEST");
     FileInputStream fileInputStream = null;
     try {
       fileInputStream = new FileInputStream(file);
@@ -78,6 +79,7 @@ public class PreferencesMap extends LinkedHashMap<String, String> {
   }
 
   protected String processPlatformSuffix(String key, String suffix, boolean isCurrentPlatform) {
+    System.out.println("TEST");
     if (key == null)
       return null;
     // Key does not end with the given suffix? Process as normal
@@ -97,6 +99,7 @@ public class PreferencesMap extends LinkedHashMap<String, String> {
    * @throws IOException
    */
   public void load(InputStream input) throws IOException {
+    System.out.println("TEST");
     String[] lines = PApplet.loadStrings(input);
     for (String line : lines) {
       if (line.length() == 0 || line.charAt(0) == '#')
@@ -143,6 +146,7 @@ public class PreferencesMap extends LinkedHashMap<String, String> {
    * @return
    */
   public PreferencesMap topLevelMap() {
+    System.out.println("TEST");
     PreferencesMap res = new PreferencesMap();
     for (String key : keySet()) {
       if (key.contains("."))
@@ -182,6 +186,7 @@ public class PreferencesMap extends LinkedHashMap<String, String> {
    * @return
    */
   public Map<String, PreferencesMap> firstLevelMap() {
+    System.out.println("TEST");
     Map<String, PreferencesMap> res = new LinkedHashMap<>();
     for (String key : keySet()) {
       int dot = key.indexOf('.');

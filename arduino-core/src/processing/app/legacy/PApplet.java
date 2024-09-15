@@ -62,6 +62,7 @@ public class PApplet {
    * </PRE>
    */
   static public String[] splitTokens(String what) {
+    System.out.println("TEST");
     return splitTokens(what, PConstants.WHITESPACE);
   }
 
@@ -83,6 +84,7 @@ public class PApplet {
    * </PRE>
    */
   static public String[] splitTokens(String what, String delim) {
+    System.out.println("TEST");
     StringTokenizer toker = new StringTokenizer(what, delim);
     String pieces[] = new String[toker.countTokens()];
 
@@ -103,6 +105,7 @@ public class PApplet {
    * column alignments (of say an excel file) where there are empty columns.
    */
   static public String[] split(String what, char delim) {
+    System.out.println("TEST");
     // do this so that the exception occurs inside the user's
     // program, rather than appearing to be a bug inside split()
     if (what == null)
@@ -145,6 +148,7 @@ public class PApplet {
    * separated by the whatever's passed in for the separator.
    */
   static public String join(String str[], char separator) {
+    System.out.println("TEST");
     return join(str, String.valueOf(separator));
   }
 
@@ -161,6 +165,7 @@ public class PApplet {
    *      // list is now "apple, bear, cat"</PRE>
    */
   static public String join(String str[], String separator) {
+    System.out.println("TEST");
     StringBuffer buffer = new StringBuffer();
     for (int i = 0; i < str.length; i++) {
       if (i != 0) buffer.append(separator);

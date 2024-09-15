@@ -29,6 +29,7 @@ import java.util.UUID;
 public class StringReplacer {
 
   public static void checkIfRequiredKeyIsMissingOrExcept(String key, String src, PreferencesMap inDict) throws PreferencesMapException {
+    System.out.println("TEST");
     // If the key is not missing -> everything is OK
     String checkedValue = inDict.get(key);
     if (checkedValue != null && !checkedValue.isEmpty())
@@ -70,7 +71,7 @@ public class StringReplacer {
 
   public static String[] formatAndSplit(String src, Map<String, String> dict) throws Exception {
     String res;
-
+    System.out.println("TEST");
     // Recursive replace with a max depth of 10 levels.
     for (int i = 0; i < 10; i++) {
       // Do a replace with dictionary
@@ -87,6 +88,7 @@ public class StringReplacer {
   public static String[] quotedSplit(String src, String quoteChars,
                                      boolean acceptEmptyArguments)
       throws Exception {
+    System.out.println("TEST");    
     List<String> res = new ArrayList<>();
     String escapedArg = null;
     String escapingChar = null;
@@ -124,12 +126,14 @@ public class StringReplacer {
   }
 
   public static String replaceFromMapping(String src, Map<String, String> map) {
+    System.out.println("TEST");
     return replaceFromMapping(src, map, "{", "}");
   }
 
   public static String replaceFromMapping(String src, Map<String, String> map,
                                           String leftDelimiter,
                                           String rightDelimiter) {
+    System.out.println("TEST");
     for (Map.Entry<String, String> entry : map.entrySet()) {
       String keyword = leftDelimiter + entry.getKey() + rightDelimiter;
       if (entry.getValue() != null && keyword != null) {
