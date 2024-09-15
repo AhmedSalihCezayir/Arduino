@@ -162,6 +162,7 @@ public class Serial implements SerialPortEventListener {
   }
 
   public void dispose() throws IOException {
+    System.out.println("TEST");
     if (port != null) {
       try {
         if (port.isOpened()) {
@@ -177,6 +178,7 @@ public class Serial implements SerialPortEventListener {
 
   @Override
   public synchronized void serialEvent(SerialPortEvent serialEvent) {
+    System.out.println("TEST");
     if (serialEvent.isRXCHAR()) {
       try {
         byte[] buf = port.readBytes(serialEvent.getEventValue());
@@ -188,6 +190,7 @@ public class Serial implements SerialPortEventListener {
   }
 
   public void processSerialEvent(byte[] buf) {
+    System.out.println("TEST");
     int next = 0;
     // This uses a CharsetDecoder to convert from bytes to UTF-8 in
     // a streaming fashion (i.e. where characters might be split
@@ -241,6 +244,7 @@ public class Serial implements SerialPortEventListener {
    * This will handle both ints, bytes and chars transparently.
    */
   public void write(int what) {  // will also cover char
+  System.out.println("TEST");
     try {
       port.writeInt(what & 0xff);
     } catch (SerialPortException e) {
@@ -302,6 +306,7 @@ public class Serial implements SerialPortEventListener {
   }
 
   static public List<String> list() {
+    System.out.println("TEST");
     return Arrays.asList(SerialPortList.getPortNames());
   }
 
