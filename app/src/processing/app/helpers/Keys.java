@@ -61,6 +61,7 @@ public class Keys {
    * enabled, it is registered again.
    */
   public static void bind(final JComponent component, final Action action) {
+    System.out.println("TEST");
     bind(component, action,
          (KeyStroke) action.getValue(Action.ACCELERATOR_KEY));
   }
@@ -77,6 +78,7 @@ public class Keys {
    */
   public static void bind(final JComponent component, final Action action,
                           KeyStroke keystroke) {
+    System.out.println("TEST");
     bind(component, action, keystroke, JComponent.WHEN_IN_FOCUSED_WINDOW);
   }
 
@@ -101,6 +103,7 @@ public class Keys {
    */
   public static void bind(final JComponent component, final Action action,
                           KeyStroke keystroke, int condition) {
+    System.out.println("TEST");
     // The input map maps keystrokes to arbitrary objects (originally strings
     // that described the option, we just use the Action object itself).
     if (action.isEnabled())
@@ -183,12 +186,14 @@ public class Keys {
   private static void enableBind(final JComponent component,
                                  final Action action, final KeyStroke keystroke,
                                  int condition) {
+    System.out.println("TEST");
     component.getInputMap(condition).put(keystroke, action);
   }
 
   private static void disableBind(final JComponent component,
                                   final Action action,
                                   final KeyStroke keystroke, int condition) {
+    System.out.println("TEST");
     component.getInputMap(condition).put(keystroke, action);
   }
 
