@@ -194,6 +194,7 @@ public class Compiler implements MessageConsumer {
   }
 
   private String VIDPID() {
+    System.out.println("TEST");
     BoardPort boardPort = BaseNoGui.getDiscoveryManager().find(PreferencesData.get("serial.port"));
     if (boardPort == null) {
       return "";
@@ -209,6 +210,7 @@ public class Compiler implements MessageConsumer {
   }
 
   private PreferencesMap loadPreferences(TargetBoard board, TargetPlatform platform, TargetPackage aPackage, String vidpid) throws RunnerException, IOException {
+    System.out.println("TEST");
     ByteArrayOutputStream stdout = new ByteArrayOutputStream();
     ByteArrayOutputStream stderr = new ByteArrayOutputStream();
     MessageConsumerOutputStream err = new MessageConsumerOutputStream(new I18NAwareMessageConsumer(new PrintStream(stderr), Compiler.this), "\n");
@@ -224,6 +226,7 @@ public class Compiler implements MessageConsumer {
   }
 
   private void addPathFlagIfPathExists(List<String> cmd, String flag, File folder) {
+    System.out.println("TEST");
     if (folder.exists()) {
       cmd.add(flag);
       cmd.add(folder.getAbsolutePath());
@@ -231,6 +234,7 @@ public class Compiler implements MessageConsumer {
   }
 
   private void callArduinoBuilder(TargetBoard board, TargetPlatform platform, TargetPackage aPackage, String vidpid, BuilderAction action, OutputStream outStream, OutputStream errStream) throws RunnerException {
+    System.out.println("TEST");
     List<String> cmd = new ArrayList<>();
     cmd.add(BaseNoGui.getContentFile("arduino-builder").getAbsolutePath());
     cmd.add(action.value);
@@ -361,6 +365,7 @@ public class Compiler implements MessageConsumer {
   }
 
   private void saveHex(String compiledSketch, String copyOfCompiledSketch, PreferencesMap prefs) throws RunnerException {
+    System.out.println("TEST");
     try {
       compiledSketch = StringReplacer.replaceFromMapping(compiledSketch, prefs);
       copyOfCompiledSketch = StringReplacer.replaceFromMapping(copyOfCompiledSketch, prefs);
