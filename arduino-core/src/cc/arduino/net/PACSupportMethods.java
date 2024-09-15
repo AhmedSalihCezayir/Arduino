@@ -43,18 +43,22 @@ import java.util.regex.Pattern;
 public class PACSupportMethods {
 
   public boolean isPlainHostName(String host) {
+    System.out.println("TEST");
     return !host.contains(".");
   }
 
   public boolean dnsDomainIs(String host, String domain) {
+    System.out.println("TEST");
     return host.contains(domain);
   }
 
   public boolean localHostOrDomainIs(String host, String hostdom) {
+    System.out.println("TEST");
     return hostdom.contains(host);
   }
 
   public boolean isResolvable(String host) {
+    System.out.println("TEST");
     try {
       dnsResolve(host);
       return true;
@@ -97,6 +101,7 @@ public class PACSupportMethods {
   }
 
   public boolean shExpMatch(String str, String shexp) {
+    System.out.println("TEST");
     String exp = shexp.replace("*", "");
     return Pattern.compile(exp).matcher(str).find();
   }

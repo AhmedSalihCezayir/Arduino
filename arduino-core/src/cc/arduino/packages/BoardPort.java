@@ -86,10 +86,12 @@ public class BoardPort {
   }
 
   public String getBoardName() {
+    System.out.println("TEST");
     return boardName;
   }
 
   public void setBoardName(String boardName) {
+    System.out.println("TEST");
     this.boardName = boardName;
   }
 
@@ -123,6 +125,7 @@ public class BoardPort {
   }
 
   public String toCompleteString() {
+    System.out.println("TEST");
     return this.address + "_" + this.getPrefs().get("vid") + "_" + this.getPrefs().get("pid");
   }
 
@@ -130,6 +133,7 @@ public class BoardPort {
   // If found, boardName is set to the name from boards.txt
   // and the board is returned.  If not found, null is returned.
   public TargetBoard searchMatchingBoard() {
+    System.out.println("TEST");
     if (identificationPrefs == null || identificationPrefs.isEmpty()) return null;
     for (TargetPackage targetPackage : BaseNoGui.packages.values()) {
       for (TargetPlatform targetPlatform : targetPackage.getPlatforms().values()) {
@@ -145,6 +149,7 @@ public class BoardPort {
   }
 
   public boolean matchesBoard(TargetBoard board) {
+    System.out.println("TEST");
     PreferencesMap identificationProps = getIdentificationPrefs();
     PreferencesMap boardProps = board.getPreferences();
 
