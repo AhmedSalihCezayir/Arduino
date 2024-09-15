@@ -39,6 +39,7 @@ public class Platform extends processing.app.Platform {
 
   @Override
   public void setLookAndFeel() throws Exception {
+    System.out.println("TEST");
     // Override desktop check
     System.setProperty("sun.desktop", "gnome");
     super.setLookAndFeel();
@@ -48,6 +49,7 @@ public class Platform extends processing.app.Platform {
 
   @Override
   public File getDefaultSketchbookFolder() throws Exception {
+    System.out.println("TEST");
     File home = new File(System.getProperty("user.home"));
     return new File(home, "Arduino");
   }
@@ -55,6 +57,7 @@ public class Platform extends processing.app.Platform {
 
   @Override
   public void openURL(String url) throws Exception {
+    System.out.println("TEST");
     if (openFolderAvailable()) {
       String launcher = PreferencesData.get("launcher");
       if (launcher != null) {
@@ -66,6 +69,7 @@ public class Platform extends processing.app.Platform {
 
   @Override
   public boolean openFolderAvailable() {
+    System.out.println("TEST");
     if (PreferencesData.get("launcher") != null) {
       return true;
     }
@@ -101,6 +105,7 @@ public class Platform extends processing.app.Platform {
 
   @Override
   public void openFolder(File file) throws Exception {
+    System.out.println("TEST");
     if (openFolderAvailable()) {
       String launcher = PreferencesData.get("launcher");
       try {
