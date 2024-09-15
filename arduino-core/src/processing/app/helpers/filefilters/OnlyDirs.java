@@ -34,6 +34,7 @@ public class OnlyDirs implements FilenameFilter {
 
   @Override
   public boolean accept(File dir, String name) {
+    System.out.println("TEST");
     if (name.charAt(0) == '.')
       return false;
     if (name.equals("CVS"))
