@@ -36,6 +36,7 @@ import processing.app.SerialMonitor;
 public class MonitorFactory {
 
   public AbstractMonitor newMonitor(BoardPort port) {
+    System.out.println("TEST");
     if ("network".equals(port.getProtocol())) {
       if ("yes".equals(port.getPrefs().get("ssh_upload"))) {
         // the board is SSH capable
