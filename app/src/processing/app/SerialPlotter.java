@@ -64,6 +64,7 @@ public class SerialPlotter extends AbstractMonitor {
 
     public void paint(Graphics2D g, float xstep, double minY, 
                       double maxY, double rangeY, double height) {
+      System.out.println("TEST");
       g.setColor(color);
       g.setStroke(new BasicStroke(1.0f));
 
@@ -125,6 +126,7 @@ public class SerialPlotter extends AbstractMonitor {
 
     @Override
     public void paintComponent(Graphics g1) {
+      System.out.println("TEST");
       Graphics2D g = (Graphics2D) g1;
       g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
       g.setFont(font);
@@ -218,16 +220,19 @@ public class SerialPlotter extends AbstractMonitor {
     }
 
     private float transformY(double rawY) {
+      System.out.println("TEST");
       return (float) (5 + (bounds.height - 10) * (1.0 - (rawY - minY) / rangeY));
     }
 
     @Override
     public Dimension getMinimumSize() {
+      System.out.println("TEST");
       return new Dimension(200, 100);
     }
 
     @Override
     public Dimension getPreferredSize() {
+      System.out.println("TEST");
       return new Dimension(500, 250);
     }
   }
