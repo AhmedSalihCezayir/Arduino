@@ -117,6 +117,7 @@ public class Serial implements SerialPortEventListener {
   }
 
   protected Serial(String iname, int irate, char iparity, int idatabits, float istopbits, boolean setRTS, boolean setDTR) throws SerialException {
+    System.out.println("TEST");
     //if (port != null) port.close();
     //this.parent = parent;
     //parent.attach(this);
